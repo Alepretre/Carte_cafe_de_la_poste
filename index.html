@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#173523">
+<title>Café de la Poste — Carte</title>
+<style>
+:root{--green:#173523;--green-dark:#0e2418;--gold:#b08a43;--gold-light:#d5b66c;--cream:#f7f1e7;--ink:#26352d}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:Georgia,"Times New Roman",serif}
+
+/* ---------- header ---------- */
+header{position:relative;background:linear-gradient(160deg,var(--green) 0%,var(--green-dark) 100%);color:#fff;padding:34px 18px 28px;text-align:center;border-bottom:4px solid var(--gold);overflow:hidden}
+header::before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle at 20% 20%, rgba(213,182,108,.12) 0, transparent 40%),radial-gradient(circle at 85% 75%, rgba(213,182,108,.10) 0, transparent 45%);pointer-events:none}
+.crest{width:54px;height:54px;margin:0 auto 6px;opacity:0;animation:fadeDown .8s ease forwards .1s}
+.crest svg{width:100%;height:100%;stroke:var(--gold-light);fill:none;stroke-width:1.4}
+header .orn{color:var(--gold-light);font-size:18px;opacity:0;animation:fadeDown .8s ease forwards .25s}
+h1{font-size:42px;letter-spacing:5px;margin:6px 0 0;opacity:0;animation:fadeDown .8s ease forwards .4s}
+header p{color:var(--gold-light);font-size:20px;font-style:italic;margin:2px 0 4px;opacity:0;animation:fadeDown .8s ease forwards .5s}
+header small{letter-spacing:3px;opacity:.85}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ---------- tabs ---------- */
+nav{position:sticky;top:0;z-index:5;background:#fffaf2;border-bottom:1px solid #dccaa9;padding:10px;display:flex;gap:8px;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch}
+nav::-webkit-scrollbar{height:4px}
+nav::-webkit-scrollbar-thumb{background:#dccaa9;border-radius:4px}
+nav button{font-family:inherit;cursor:pointer;color:var(--green);background:#fff;text-decoration:none;border:1px solid #d8c29b;border-radius:20px;padding:8px 13px;font-size:14px;transition:background .2s,color .2s,transform .15s,box-shadow .2s}
+nav button:hover{transform:translateY(-1px);box-shadow:0 3px 8px rgba(23,53,35,.12)}
+nav button.active{background:var(--green);border-color:var(--green);color:#fff;box-shadow:0 3px 10px rgba(23,53,35,.25)}
+
+main{max-width:760px;margin:auto;padding:18px 14px 45px}
+
+.section{margin:0 0 30px;animation:fadeIn .45s ease}
+.section[hidden]{display:none}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+h2{display:flex;align-items:center;gap:10px;color:var(--green);font-size:25px;border-bottom:1px solid var(--gold);padding-bottom:9px;margin:0 0 12px}
+h2 .ico{flex:0 0 auto;width:28px;height:28px;stroke:var(--gold);fill:none;stroke-width:1.6}
+.sub{color:#9a7437;font-style:italic;margin:-5px 0 12px}
+.sub.spaced{margin-top:18px}
+
+.item{display:flex;justify-content:space-between;gap:14px;padding:11px 2px;border-bottom:1px dotted #cbb894;transition:background .2s}
+.item:hover{background:rgba(176,138,67,.06)}
+.item:last-child{border-bottom:0}
+.name{font-weight:bold}
+.desc{font-size:14px;line-height:1.35;margin-top:3px;color:#56635c}
+.price{font-weight:bold;white-space:nowrap;color:var(--green);align-self:center}
+
+.note{background:var(--green);color:#fff;padding:15px;border-radius:8px;margin:12px 0}
+.note strong{color:var(--gold-light)}
+
+.hero{position:relative;border:1px solid #d8c29b;padding:22px 18px;text-align:center;margin-bottom:22px;background:#fffaf2;border-radius:10px;overflow:hidden}
+.hero::after{content:"❧";position:absolute;font-size:70px;color:rgba(176,138,67,.08);right:-6px;bottom:-22px}
+.hero strong{font-size:19px;color:var(--green);display:block;margin-bottom:4px}
+.hero .divider{width:60px;height:2px;background:var(--gold);margin:12px auto 0;border-radius:2px}
+
+.state-msg{text-align:center;padding:50px 15px;font-style:italic;color:#9a7437}
+.state-msg.error{color:#a33}
+.state-msg button{margin-top:14px;font-family:inherit;cursor:pointer;background:var(--green);color:#fff;border:none;border-radius:20px;padding:9px 18px;font-size:14px}
+
+footer{background:linear-gradient(160deg,var(--green) 0%,var(--green-dark) 100%);color:#fff;text-align:center;padding:28px 15px;border-top:4px solid var(--gold)}
+footer .orn{color:var(--gold-light);margin-bottom:6px;font-size:16px}
+
+@media(min-width:700px){main{padding-left:28px;padding-right:28px} h1{font-size:50px}}
+@media (prefers-reduced-motion: reduce){*{animation-duration:.001ms !important;transition-duration:.001ms !important}}
+</style>
+</head>
+<body>
+<header>
+<div class="crest">
+<svg viewBox="0 0 64 64"><path d="M32 6c-9 6-9 16 0 22 9-6 9-16 0-22Z"/><path d="M32 28v30"/><path d="M20 40c4 4 8 4 12 0"/><path d="M44 40c-4 4-8 4-12 0"/><path d="M20 50c4 4 8 4 12 0"/><path d="M44 50c-4 4-8 4-12 0"/></svg>
+</div>
+<div class="orn">❧ ✦ ❧</div>
+<h1>CAFÉ</h1><p>de la</p><h1>POSTE</h1>
+<small>MAISON DE VILLAGE</small>
+<div class="orn">— Partage et convivialité —</div>
+</header>
+
+<nav id="tabs"></nav>
+
+<main>
+<div class="hero"><strong>Bienvenue au Café de la Poste</strong>Découvrez notre carte et nos tarifs.<div class="divider"></div></div>
+
+<div id="stateMsg" class="state-msg">Chargement de la carte…</div>
+<div id="menuContent"></div>
+</main>
+
+<footer>
+<div class="orn">❧ ✦ ❧</div>
+CAFÉ DE LA POSTE<br><span style="color:#d5b66c">Merci et à bientôt !</span>
+</footer>
+
+<script>
+(function(){
+  // ==== À CONFIGURER ====
+  // Collez ici l'URL de votre Web App Apps Script (Déployer > Gérer les déploiements > URL de l'application Web)
+  var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyWpfv4gcfDJD51MgHcbQqOXXYflb-eTi0Dyug42Moeu6rQVeTrUUfweHhP-NLdkOW3BA/exec';
+  var JSONP_TIMEOUT_MS = 10000;
+
+  var tabsEl = document.getElementById('tabs');
+  var contentEl = document.getElementById('menuContent');
+  var stateEl = document.getElementById('stateMsg');
+
+  var ICONS = {
+    cocktail: '<path d="M4 4h16l-7 8v7h4M12 12v7H8"/><path d="M6 8h12"/>',
+    soft: '<path d="M6 3h12l-1 4H7L6 3Z"/><path d="M7 7l1.5 13a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1L17 7"/><path d="M8.5 12h7"/>',
+    alcool: '<path d="M6 2h12l-1.5 6.5a2 2 0 0 1-.5 1L14 12v8h3v2H7v-2h3v-8L7.5 9.5a2 2 0 0 1-.5-1L5.5 2Z"/>',
+    digestif: '<path d="M5 3h14l-2 7a5 5 0 0 1-10 0L5 3Z"/><path d="M12 14v7"/><path d="M8 21h8"/>',
+    biere: '<path d="M5 8h9v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8Z"/><path d="M14 10h2a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-2"/><path d="M5 8V5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v3"/>',
+    vin: '<path d="M7 3h10l-1 6a4 4 0 0 1-8 0L7 3Z"/><path d="M12 13v8"/><path d="M8 21h8"/>',
+    plat: '<path d="M12 3a9 9 0 0 0 0 18 9 9 0 0 0 0-18Z"/><path d="M12 3v18M4.5 8h15M4.5 16h15"/>',
+    partager: '<circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r="1"/><circle cx="15" cy="9" r="1"/><circle cx="13" cy="14" r="1"/><circle cx="9" cy="15" r="1"/>',
+    happy: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+    defaut: '<circle cx="12" cy="12" r="9"/><path d="M8 12h8M12 8v8"/>'
+  };
+
+  function pickIcon(name){
+    var n = stripAccents(name).toLowerCase();
+    if (n.indexOf('cocktail') !== -1) return ICONS.cocktail;
+    if (n.indexOf('soft') !== -1) return ICONS.soft;
+    if (n.indexOf('digestif') !== -1) return ICONS.digestif;
+    if (n.indexOf('alcool') !== -1) return ICONS.alcool;
+    if (n.indexOf('biere') !== -1 || n.indexOf('bière') !== -1) return ICONS.biere;
+    if (n.indexOf('vin') !== -1) return ICONS.vin;
+    if (n.indexOf('plat') !== -1 || n.indexOf('salade') !== -1 || n.indexOf('sandwich') !== -1) return ICONS.plat;
+    if (n.indexOf('partager') !== -1) return ICONS.partager;
+    if (n.indexOf('happy') !== -1) return ICONS.happy;
+    return ICONS.defaut;
+  }
+
+  function stripAccents(str){
+    return String(str || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  }
+
+  function slugify(str){
+    return stripAccents(str).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'section';
+  }
+
+  function escapeHtml(str){
+    return String(str == null ? '' : str)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function formatPrice(prix){
+    var s = String(prix == null ? '' : prix).trim();
+    if (!s) return '';
+    if (s.indexOf('€') !== -1) return s;
+    var num = parseFloat(s.replace(',', '.'));
+    if (!isNaN(num)) return num.toFixed(2).replace('.', ',') + ' €';
+    return s;
+  }
+
+  function groupData(rows){
+    var cats = [];
+    var byCat = {};
+    rows.forEach(function(r){
+      var catName = (r.categorie || '').trim();
+      if (!catName || !r.article) return;
+      if (!byCat[catName]){
+        byCat[catName] = { name: catName, id: slugify(catName), subs: [], subIndex: {} };
+        cats.push(byCat[catName]);
+      }
+      var cat = byCat[catName];
+      var subName = (r.sousCategorie || '').trim();
+      var key = subName || '__default__';
+      if (!cat.subIndex[key]){
+        cat.subIndex[key] = { name: subName, items: [] };
+        cat.subs.push(cat.subIndex[key]);
+      }
+      cat.subIndex[key].items.push(r);
+    });
+    return cats;
+  }
+
+  function renderMenu(cats){
+    if (!cats.length){
+      showState('Aucun article disponible pour le moment.', false);
+      return;
+    }
+
+    var tabsHtml = '';
+    var sectionsHtml = '';
+
+    cats.forEach(function(cat, i){
+      tabsHtml += '<button data-target="' + cat.id + '"' + (i === 0 ? ' class="active"' : '') + '>' +
+        escapeHtml(cat.name) + '</button>';
+
+      var itemsHtml = '';
+      cat.subs.forEach(function(sub, si){
+        if (sub.name){
+          itemsHtml += '<div class="sub' + (si > 0 ? ' spaced' : '') + '">' + escapeHtml(sub.name) + '</div>';
+        }
+        sub.items.forEach(function(item){
+          var desc = item.description ? '<div class="desc">' + escapeHtml(item.description) + '</div>' : '';
+          itemsHtml +=
+            '<div class="item"><div><div class="name">' + escapeHtml(item.article) + '</div>' + desc + '</div>' +
+            '<div class="price">' + escapeHtml(formatPrice(item.prix)) + '</div></div>';
+        });
+      });
+
+      sectionsHtml +=
+        '<section class="section" id="' + cat.id + '"' + (i === 0 ? '' : ' hidden') + '>' +
+        '<h2><svg class="ico" viewBox="0 0 24 24">' + pickIcon(cat.name) + '</svg>' + escapeHtml(cat.name) + '</h2>' +
+        itemsHtml +
+        '</section>';
+    });
+
+    tabsEl.innerHTML = tabsHtml;
+    contentEl.innerHTML = sectionsHtml;
+    stateEl.hidden = true;
+
+    initTabs();
+  }
+
+  function initTabs(){
+    var buttons = tabsEl.querySelectorAll('button');
+    var sections = contentEl.querySelectorAll('.section');
+
+    function showTab(id, focusButton){
+      sections.forEach(function(s){ s.hidden = s.id !== id; });
+      buttons.forEach(function(b){ b.classList.toggle('active', b.dataset.target === id); });
+      if (history.replaceState) history.replaceState(null, '', '#' + id);
+      if (focusButton) focusButton.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+    }
+
+    buttons.forEach(function(b){
+      b.addEventListener('click', function(){ showTab(b.dataset.target, b); });
+    });
+
+    var initial = (location.hash || '').replace('#', '');
+    var initialBtn = tabsEl.querySelector('button[data-target="' + initial + '"]');
+    if (initialBtn) showTab(initial, initialBtn);
+  }
+
+  function showState(message, isError){
+    stateEl.hidden = false;
+    stateEl.className = 'state-msg' + (isError ? ' error' : '');
+    stateEl.innerHTML = escapeHtml(message) +
+      (isError ? '<br><button id="retryBtn">Réessayer</button>' : '');
+    if (isError){
+      document.getElementById('retryBtn').addEventListener('click', loadMenu);
+    }
+  }
+
+  function loadMenu(){
+    showState('Chargement de la carte…', false);
+
+    if (!SCRIPT_URL || SCRIPT_URL.indexOf('PASTE_YOUR') === 0){
+      showState('URL du Web App Apps Script non configurée. Modifiez SCRIPT_URL dans le script.', true);
+      return;
+    }
+
+    var callbackName = 'menuCallback_' + Date.now();
+    var script = document.createElement('script');
+    var timeoutId;
+
+    function cleanup(){
+      clearTimeout(timeoutId);
+      delete window[callbackName];
+      if (script.parentNode) script.parentNode.removeChild(script);
+    }
+
+    window[callbackName] = function(rows){
+      cleanup();
+      try {
+        renderMenu(groupData(rows || []));
+      } catch (err) {
+        showState('Erreur lors de l\'affichage de la carte.', true);
+      }
+    };
+
+    script.onerror = function(){
+      cleanup();
+      showState('Impossible de contacter le serveur de la carte.', true);
+    };
+
+    timeoutId = setTimeout(function(){
+      cleanup();
+      showState('Le chargement a pris trop de temps.', true);
+    }, JSONP_TIMEOUT_MS);
+
+    script.src = SCRIPT_URL + (SCRIPT_URL.indexOf('?') === -1 ? '?' : '&') + 'callback=' + callbackName;
+    document.body.appendChild(script);
+  }
+
+  loadMenu();
+})();
+</script>
+</body></html>
